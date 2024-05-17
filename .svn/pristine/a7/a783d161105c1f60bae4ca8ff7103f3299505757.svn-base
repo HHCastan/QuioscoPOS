@@ -1,0 +1,58 @@
+package com.flamingo.quiosco.util;
+
+import com.ibm.OS4690.TerminalApplicationServices;
+
+import java.util.Properties;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+import com.ibm.OS4690.FlexosException;
+
+public class Util {
+	public static Logger logger = null;
+
+	public static Logger getLogger() {
+		if (logger == null)
+			initLogger();
+		return logger;
+	}
+
+	private static void initLogger() {
+		try {
+			logger = Logger.getLogger("quisco");
+			Properties pro = new Properties();
+			pro.load(Util.class.getResourceAsStream("/properties/QuiscoL4j.properties"));
+			PropertyConfigurator.configure(pro);
+		} catch (Throwable e) {
+
+		}
+	}
+
+	public static String getTienda() {
+		String platform = System.getProperty("os.name").toLowerCase();
+		System.out.println("Plataforma OS: " + platform);
+		if (platform.equals("ibm 4690 os") || platform.startsWith("ibm 4690") || platform.startsWith("ibm") || platform.startsWith("4690") || platform.startsWith("linux") ) {
+			try {
+				String sTienda = TerminalApplicationServices.getTerminalStatus().getStoreNumber();
+				return sTienda.substring(sTienda.length() - 3);
+			} catch (FlexosException e) {
+				System.out.println("Error obteniendo numero de tienda");
+			}
+		}
+		return "922";
+	}
+
+	public static String getTerminal() {
+		String platform = System.getProperty("os.name").toLowerCase();
+		if (platform.equals("ibm 4690 os") || platform.startsWith("ibm 4690") || platform.startsWith("ibm") || platform.startsWith("4690") || platform.startsWith("linux") ) {
+			try {
+				return TerminalApplicationServices.getTerminalStatus().getTerminalNumber();
+			} catch (FlexosException e) {
+				System.out.println("Error obteniendo numero de terminal");
+			}
+		}
+		return "001";
+	}
+
+}

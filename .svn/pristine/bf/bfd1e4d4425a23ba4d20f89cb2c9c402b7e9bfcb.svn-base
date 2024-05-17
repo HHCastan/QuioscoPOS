@@ -1,0 +1,16 @@
+log4j.rootLogger=DEBUG, console, quiosco
+#log4j.logger.com.flamingo.quiosco.controladores.ControladorPeticiones=DEBUG,quiosco,console
+
+# log
+log4j.appender.quiosco=org.apache.log4j.RollingFileAppender
+log4j.appender.quiosco.File=R::LDSLOG:QUIOSCO/quiosco.log
+#log4j.appender.quiosco.File=c:/tmp/logs/quiosco.log
+log4j.appender.quiosco.MaxFileSize=2MB
+log4j.appender.quiosco.MaxBackupIndex=5 
+log4j.appender.quiosco.layout=org.apache.log4j.PatternLayout
+log4j.appender.quiosco.layout.ConversionPattern=<%d{dd-MMM-yyyy HH:mm:ss,SSS}> [%-5p] [%C{1}] - %m%n
+
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.Target=System.out
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=<%d{dd-MMM-yyyy HH:mm:ss,SSS}> [%-5p] [%C{1}] - %m%n
